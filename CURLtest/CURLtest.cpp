@@ -1,6 +1,4 @@
-﻿// CURLtest.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-#define CURL_STATICLIB
+﻿#define CURL_STATICLIB
 #include <curl/curl.h>
 #include <iostream>
 #include <nlohmann/json.hpp>
@@ -12,33 +10,7 @@ using json = nlohmann::json;
 using namespace std;
 
 // console cmd
-// mosquitto_pub -h test.mosquitto.org -t mad/mad -m "28.9" -d --cafile C:\Users\mad\Downloads\mosquitto.org.crt -p 8885 -u rw -P readwrite
-
-//int main()
-//{
-//    CURL* curl;
-//    CURLcode resp;
-//    curl = curl_easy_init();
-//    curl_easy_setopt(curl, CURLOPT_URL, "https://api.data.gov.sg/v1/environment/air-temperature");
-//    resp = curl_easy_perform(curl);
-//
-//    curl_easy_cleanup(curl);
-//
-//    string readBuffer;
-//
-//    json responseJson = json::parse(resp);
-//    json object = responseJson["api_info"];
-//    cout << object << endl;
-//    string responseString = R"({"response":[{"id":210700286,"first_name":"Lindsey","last_name":"Stirling"}]})";
-//    json responseJson = json::parse(responseString);
-//    json object = responseJson["response"];
-//    string first_name = object[0]["first_name"];
-//    string last_name = object[0]["last_name"];
-//    cout << first_name << endl;
-//    cout << last_name << endl;
-//
-//    return 0;
-//}
+// mosquitto_pub -h test.mosquitto.org -t topic -m "28.9" -d --cafile C:\path -p 8885 -u user -P password
 
 
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
@@ -80,7 +52,6 @@ vector < pair<string, string >>  GetStationsValues(vector<string>& stations, vec
             
             if (find(stations.begin(),stations.end(), station_id) != stations.end())
             {
-                //values.push_back(object["value"]);
                 stationValue.push_back(make_pair("/api/temperature/"+station_id, to_string(object["value"])));
             }
         }
